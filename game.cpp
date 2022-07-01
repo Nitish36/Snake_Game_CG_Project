@@ -12,7 +12,7 @@ void initGrid(int, int);
 void draw_grid();
 void draw_food();
 void draw_snake();
-void unit(int, int);
+void unit(int, int);            //each pixel unit is taken as a single square
 int random(int, int);
 
 bool length_inc = false;
@@ -21,14 +21,14 @@ extern int score;
 extern bool game_over;
 bool food = false;
 int rows = 0, columns = 0;
-int sDirection = RIGHT;
-int foodx, foody;
+int sDirection = RIGHT;         //initially the snake will be seeing moving right
+int foodx, foody;               // coordinate position of the food
 int posx[MAX + 1] = { 4,3,2,1,0,-1,-1 };
 int posy[MAX + 1] = { 10,10,10,10,10,10,10 };
 int length = 7;
 
-//creation of grid
-void initGrid(int x, int y) 
+
+void initGrid(int x, int y)         // specify the coordinate values so as to create the grid
 {
     columns = x;
     rows = y;
@@ -60,20 +60,24 @@ void draw_snake()
             glColor3f(0.0, 0.0, 1.0);
             switch (sDirection)
             {
-            case UP:
+            case UP:                //keyboard key UP moves the snake one unit up 
                 posy[i]++;
                 break;
-            case DOWN:
+            case DOWN:              //keyboard key DOWN moves the snake one unit down
                 posy[i]--;
                 break;
-            case RIGHT:
+            case RIGHT:             //keyboard key right moves the snake one unit right
                 posx[i]++;
                 break;
-            case LEFT:
+            case LEFT:              //keyboard key left moves the snake one unit left
                 posx[i]--;
                 break;
             }
-            if (posx[i] == 0 || posx[i] == columns - 1 || posy[i] == 0 || posy[i] == rows - 1)
+            if (posx[i] == 0 || posx[i] == columns - 1 || posy[i] == 0 || posy[i] == rows - 1) 
+                
+                //if it touches the red squares on the corener edges  game over
+
+
                 game_over = true;
             else if (posx[i] == foodx && posy[i] == foody)
             {
@@ -94,10 +98,10 @@ void draw_snake()
         glVertex2d(posx[i], posy[i]); glVertex2d(posx[i] + 1, posy[i]); glVertex2d(posx[i] + 1, posy[i] + 1); glVertex2d(posx[i], posy[i] + 1);
         glEnd();
     }
-    if (length_inc)
+    if (length_inc)     
     {
         length++;
-        length_inc = false;
+        length_inc = false; //to reset the length value
     }
 }
 
@@ -129,7 +133,7 @@ void unit(int x, int y)
     else
     {   
         //edges are coloured white 
-        glColor3f(1.0, 1.0, 1.0);
+        glColor3f(0.0, 0.0, 0.0);
         glLineWidth(1.0);
     }
     glBegin(GL_LINES);
